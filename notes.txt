@@ -1,0 +1,38 @@
+app.js 
+==============
+
+publicDir = require('path').join(__dirname, '/public');
+
+app.use('/static', express.static(__dirname + '/public')); 
+
+Make folder called public in root dir. Add this to serve static files such as css, js, img etc.
+
+Relevant from stackoverflow
+==========================
+http://stackoverflow.com/questions/8463105/why-are-the-local-css-files-and-js-file-not-linked-to-the-index-html-file
+
+I faced the same problem, but did not want to use any external modules or frameworks before I understand what's going on under the hood. So, this is how I've solved the issue for CSS file for myself. Hopefully it will be useful for someone.
+Whenever I have a request for /style.css I call this simple function:
+
+function style(response) {
+
+  console.log("Request handler 'style' was called.");
+
+  fs.readFile("style.css", function(error, file) {
+
+    if(error) {
+
+        response.writeHead(500, {"Content-Type": "text/plain"});
+
+        response.write(error + "\n");
+
+        response.end();
+
+    } else {
+        response.writeHead(200, {"Content-Type": "text/css"});
+        response.write(file);
+        response.end();
+    }
+  });
+}
+Basically, we read our static files and send them back upon request. Note that you have to take care about routing your requests.
