@@ -36,16 +36,3 @@ function style(response) {
   });
 }
 Basically, we read our static files and send them back upon request. Note that you have to take care about routing your requests.
-
-
-
-socket.emit vs io.emit
-=====================================
-io.emit is from server. socket.io is from node.
-socket.on listens to io.emit, the purpose being that the message be authorised by the server as: 
-socket.emit('msg',function(msg){
-io.emit('msg',msg);
-});
-
-If a message is to be sent directly don't use socket.emit, use io.emit.
-
