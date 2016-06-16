@@ -20,10 +20,14 @@ app.use(express.static(publicDir)); 													//serving css, js, img etc.
 io.sockets.on('connection', function(socket){
   
   users.push(socket);
+  num_users = users.length;	
+  console.log("No. of players: " + num_users);
+  
+  io.emit('users', num_users);
   
   socket.on('disconnect', function() {
-       
-	   io.emit('reload', 'reload');														//if a player leaves reload other player's page
+       if(socket == users[0] || socket == users[1])
+	   io.emit('reload', 'reload');														//if a player leaves reload all user's page
 	   
 	   var i = users.indexOf(socket);
        users.splice(i, 1);
@@ -33,18 +37,15 @@ io.sockets.on('connection', function(socket){
 	   		  
   });	  
   
+
   
-  
-  num_users = users.length;	
-  console.log("No. of players: " + num_users);
   
   socket.on('turn', function(msg){
     io.emit('turn', msg);
+	
 });
 
- socket.on('reload', function(msg){
-    io.emit('reload', msg);
-});
+
    
    
 
