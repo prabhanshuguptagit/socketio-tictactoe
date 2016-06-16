@@ -1,0 +1,17 @@
+when new connection
+if one user 
+--> ask for Name
+--> Show waiting for player 2
+--> When player 2 joins refresh player 1's game
+
+if two user
+--> ask for player 2 Name
+--> if third comes show two players are playing already to new connection
+--> if one leaves 
+	-->ask if he really wants to leave
+	-->show player left that Player 1 left
+	-->Restart , takes to initial..waiting for player 2.
+--> when wins highlight boxes in a line
+--> show number of wins of each player
+--> Global variable solve problem
+
