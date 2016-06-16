@@ -10,6 +10,34 @@ $(document).ready(function(){
 		//GLOBAL variable
 	}
 	
+	socket.on('users', function(num_users){
+		if(num_users == 1)
+		{$('h1').remove();
+		$('body').append('<h1>Waiting for second player</h1>');}
+		if(num_users == 2)
+		{$('h1').remove();
+			$('body').append('\
+		<div class="game">\
+			<div class="board">\
+				<div class="square top left"></div>\
+				<div class="square top"></div>\
+				<div class="square top right"></div>\
+				<div class="square left"></div>\
+				<div class="square"></div>\
+				<div class="square right"></div>\
+				<div class="square bottom left"></div>\
+				<div class="square bottom"></div>\
+				<div class="square bottom right"></div>\
+			</div>\
+		</div>\
+		\
+		<div class="scores"><p>svevevefffffff</p></div> '
+		);
+		}
+		if(num_users >= 3)
+			$('body').remove('h1').append('<h1>Two players are already playing the game</h1>')
+
+	});
 	
 	
 	$(".square").click( function(){

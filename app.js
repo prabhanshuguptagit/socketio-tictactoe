@@ -2,8 +2,7 @@ var express = require('express');
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);													//Hook websocket server to the http server 
-var users = [];
-var num_users = 0;
+var active_users = 0;
 
 publicDir = require('path').join(__dirname, '/public');
 
@@ -11,42 +10,33 @@ publicDir = require('path').join(__dirname, '/public');
 app.get('/', function(req, res){
 	
 	res.sendFile(__dirname + '/index.html');
-		
+
 });
 
 
 app.use(express.static(publicDir)); 													//serving css, js, img etc.
 
-io.sockets.on('connection', function(socket){
-  
-  users.push(socket);
+
+io.on('connection', function(socket){
+ 
+  active_users++;
+  io.emit('users',active_users);														//depending on num of users game.js(client!) shows state(wait, game,busy).
   
   socket.on('disconnect', function() {
-       
-	   io.emit('reload', 'reload');														//if a player leaves reload other player's page
-	   
-	   var i = users.indexOf(socket);
-       users.splice(i, 1);
-	    
-	   num_users = users.length;
-	   console.log("No. of players: " + num_users);
-	   		  
+	   active_users--;
+	   													//if a player leaves reload other player's page
+	
+	   console.log("No. of players : " + active_users);   		  
   });	  
   
-  
-  
-  num_users = users.length;	
-  console.log("No. of players: " + num_users);
-  
+  console.log("No. of players : " + active_users);
+		
+		
   socket.on('turn', function(msg){
     io.emit('turn', msg);
-});
-
- socket.on('reload', function(msg){
-    io.emit('reload', msg);
-});
+	});
    
-   
+  
 
 });
 
