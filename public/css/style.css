@@ -2,21 +2,17 @@ html {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
-*,
-*:before,
-*:after {
-    -moz-box-sizing: inherit;
-    box-sizing: inherit;
-}
+
 body {
     margin: 0px;
-    background-color: #000;
+    background-color: #4d6b85;
     color: #fff;
     font-family: sans-serif;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
     text-size-adjust: 100%;
 }
+
 .game {
     position: absolute;
     top: 50%;
@@ -30,9 +26,7 @@ body {
     -webkit-tap-highlight-color: transparent;
     tap-highlight-color: transparent;
 }
-.alt {
-    display: none;
-}
+
 .board {
     width: 100%;
     height: 100%;
@@ -43,23 +37,26 @@ body {
     width: 33.333333333%;
     height: 33.333333333%;
     cursor: pointer;
-    border-width: 2px;
-    border-color: #fff;
+    border-width: 5px;
+    border-color: #223748;
     will-change: border-color;
 	display:table;
+	
+	
 }
 .square.top {
     border-bottom-style: solid;
 }
 .square.bottom {
     border-top-style: solid;
+	
 }
 .square.left {
     clear: both;
     border-right-style: solid;
 }
 .square.right {
-    border-left-style: solid;
+    border-left-style: solid;	
 }
 
 
@@ -71,6 +68,7 @@ body {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0);
 }
+
 .scores {
     position: absolute;
     left: 50%;
@@ -223,8 +221,8 @@ body {
 @media (max-width: 540px),
 (max-height: 550px) {
     .game {
-        width: 300px;
-        height: 300px;
+        width: 350px;
+        height: 350px;
         margin-left: -150px;
         margin-top: -180px;
     }
@@ -291,18 +289,40 @@ body {
     }
 }
 
-.circle{ 
+@font-face{
 	
+	font-family: 'pacfont';
+	
+	src: url('../fonts/pacfont.ttf');
+	
+}
+
+.O{ 
 	display: table-cell;
     vertical-align: middle;
 	text-align:center;
+	
+	font-family:pacfont;
+	font-size: 50px;
+	color:#4abeab;
 }
 
-.cross{
+.X{
 	display: table-cell;
     vertical-align: middle;
-	margin:auto;
-	height:50%;
-	width:50%;
+	text-align:center;
+	
+	font-family:pacfont;
+	font-size: 50px;
+	color:#ffac39;	
+}
+
+h1
+{   
+	text-align:center;
+	
+	font-family:pacfont;
+	font-size: 50px;
+	color:#ffac39;
 	
 }

@@ -26,22 +26,21 @@ io.sockets.on('connection', function(socket){
   io.emit('users', num_users);
   
   socket.on('disconnect', function() {
-       if(socket == users[0] || socket == users[1])
-	   io.emit('reload', 'reload');														//if a player leaves reload all user's page
-	   
+       
+	   if(socket == users[0] || socket == users[1])
+	   io.emit('reload', 'reload');									//if a player leaves reload all user's page
+   
 	   var i = users.indexOf(socket);
-       users.splice(i, 1);
+       users.splice(i, 1);					
 	    
 	   num_users = users.length;
 	   console.log("No. of players: " + num_users);
 	   		  
   });	  
-  
-
-  
+ 
   
   socket.on('turn', function(msg){
-    io.emit('turn', msg);
+    io.emit('turn', msg);											//let everyone else know
 	
 });
 

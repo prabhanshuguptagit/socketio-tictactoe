@@ -1,7 +1,7 @@
 
 $(document).ready(function(){
 	var socket = io();
-	var player = 1;
+	var score = 0;
 	
 	var turn = {
 		player : 1,
@@ -27,23 +27,23 @@ $(document).ready(function(){
 	
 
 	socket.on('turn', function(turnval){
+		
 		//square number is index. squares begin from 0 not from one.
 		square_num = turnval.square;
+		clicked_square = $(".board").find( "div.square:eq(" + square_num + ")" );
 		
-		
-		if(!$(".board").find( "div.square:eq(" + square_num + ")" ).has("div").length)     //double check because if square is double clicked then div is not added and two requests are sent
+		if(!clicked_square.has("p").length)     //double check because if square is double clicked then div is not added and two requests are sent
 		{ 
-		if(turn.player==1)
-				$(".board").find( "div.square:eq(" + square_num + ")" ).append('<div class=\"circle\"><svg height="60%" width="60%"><circle cx="50%" cy="50%" r="35%" stroke="white" stroke-width="4" fill="none" /></svg></div>');
+		if( turn.player==1 )
+				clicked_square.append('<p class="O">o</p>');
 			else
-				$(".board").find( "div.square:eq(" + square_num + ")" ).append("<div class=\"cross\"><img class=\"cross\" src=\"img/cross.png\"/></div>");
-		
-		turn.player = 3-turn.player;
+				clicked_square.append('<p class="X">x</p>');
+		turn.player = 3-turn.player;					//GLOBAL change
 		}
 		
-							//GLOBAL change
+		socket.emit('checkwin', 'abcde' );					
 		
-	});
+   });
 	
    socket.on('reload', function(msg){
 	   
@@ -79,7 +79,32 @@ $(document).ready(function(){
 		if(!$('body').children().length)
 		 $('body').append('<h1>Two players are already playing. Wait for you turn.</h1>');	}   
 
-
-});
+	});
+	
+	socket.on('checkwin', function(){
+		console.log("heyhyehey!");
+		var squares = $(board).children( ".square" );
+		console.log('squares');
+		 winner  = false;
+                if (squares[0].innerHTML === mark && squares[1].innerHTML === mark && squares[2].innerHTML === mark) {
+                  winner = true;
+                } else if (squares[3].innerHTML === mark && squares[4].innerHTML === mark && squares[5].innerHTML === mark) {
+                  winner = true;
+                } else if (squares[6].innerHTML === mark && squares[7].innerHTML === mark && squares[8].innerHTML === mark) {
+                  winner = true;
+                } else if (squares[0].innerHTML === mark && squares[3].innerHTML === mark && squares[6].innerHTML === mark) {
+                  winner = true;
+                } else if (squares[1].innerHTML === mark && squares[4].innerHTML === mark && squares[7].innerHTML === mark) {
+                  winner = true;
+                } else if (squares[2].innerHTML === mark && squares[5].innerHTML === mark && squares[8].innerHTML === mark) {
+                  winner = true;
+                } else if (squares[0].innerHTML === mark && squares[4].innerHTML === mark && squares[8].innerHTML === mark) {
+                  winner = true;
+                } else if (squares[2].innerHTML === mark && squares[4].innerHTML === mark && squares[6].innerHTML === mark) {
+                  winner = true;
+                }
+                return winner;
+		
+	});
 
 });
