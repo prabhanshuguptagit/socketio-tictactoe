@@ -3,55 +3,7 @@ $(document).ready(function(){
 	var socket = io();
 	var score = 0;
 	
-	var turn = {
-		player : 1,
-		name : "Player",
-		square: 0
-		//GLOBAL variable
-	}
-	
-	
-	
-	$("body").on("click", "div.square", function(event){
-		if(!$(this).has("div").length)
-		{   
-			
-			
-			turn.square = $(this).index();
-			
-			socket.emit('turn', turn);
-			
-		}	
-		return false;
-	});
-	
-
-	socket.on('turn', function(turnval){
-		
-		//square number is index. squares begin from 0 not from one.
-		square_num = turnval.square;
-		clicked_square = $(".board").find( "div.square:eq(" + square_num + ")" );
-		
-		if(!clicked_square.has("p").length)     //double check because if square is double clicked then div is not added and two requests are sent
-		{ 
-		if( turn.player==1 )
-				clicked_square.append('<p class="O">o</p>');
-			else
-				clicked_square.append('<p class="X">x</p>');
-		turn.player = 3-turn.player;					//GLOBAL change
-		}
-		
-		socket.emit('checkwin', 'abcde' );					
-		
-   });
-	
-   socket.on('reload', function(msg){
-	   
-	   location.reload(true);
-   });	
-   
-   
-   socket.on('users', function(num_users){
+	socket.on('users', function(num_users){
 	   if(num_users == 1)
 	   { $('h1').remove();
 		 $('body').append('<h1>Waiting for second player</h1>');} 	
@@ -81,6 +33,52 @@ $(document).ready(function(){
 
 	});
 	
+	
+	socket.on('reload', function(msg){
+	   
+	   location.reload(true);
+   });	
+   
+   
+	
+	var turn = {
+		player : 1,
+		name : "Player",
+		square: 0
+		//GLOBAL variable
+	}
+	
+	
+	
+	$("body").on("click", "div.square", function(event){
+		
+			turn.square = $(this).index();
+			
+			socket.emit('turn', turn);
+	});
+	
+
+	socket.on('turn', function(turnval){
+		
+		//square number is index. squares begin from 0 not from one.
+		square_num = turnval.square;
+		clicked_square = $(".board").find( "div.square:eq(" + square_num + ")" );
+		
+		if(!clicked_square.has("p").length)     //double check because if square is double clicked then div is not added and two requests are sent
+		{ 
+		if( turn.player==1 )
+				clicked_square.append('<p class="O">o</p>');
+			else
+				clicked_square.append('<p class="X">x</p>');
+		turn.player = 3-turn.player;					//GLOBAL change
+		}
+		
+		socket.emit('checkwin', 'abcde' );					
+		
+   });
+	
+   
+  
 	socket.on('checkwin', function(){
 		console.log("heyhyehey!");
 		var squares = $(board).children( ".square" );
