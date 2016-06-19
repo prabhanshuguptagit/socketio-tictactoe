@@ -1,9 +1,20 @@
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
+ 
+server.listen(server_port, server_ip_address, function () {
+  console.log( "Listening on " + server_ip_address + ", server_port " + port )
+});
+
+
 var express = require('express');
 var app = require('express')();
 var http = require('http').Server(app);
-var io = require('socket.io')(http);													//Hook websocket server to the http server 
+var io = require('socket.io')(server);													//Hook websocket server to the http server 
 var users = [];
 var num_users = 0;
+
+
+
 
 publicDir = require('path').join(__dirname, '/public');
 
@@ -51,14 +62,9 @@ io.sockets.on('connection', function(socket){
 });
 
 
-
-
-
 var port = 8080;
 
-http.listen( port , function(){
-  console.log('listening on port : ' + port);
-});
+
 
 
 
