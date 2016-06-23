@@ -6,7 +6,6 @@ html {
 body {
     margin: 0px;
     background-color: #4d6b85;
-    color: #fff;
     font-family: sans-serif;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
@@ -42,8 +41,8 @@ body {
     will-change: border-color;
 	display:table;
 	
-	
 }
+
 .square.top {
     border-bottom-style: solid;
 }
@@ -221,8 +220,8 @@ body {
 @media (max-width: 540px),
 (max-height: 550px) {
     .game {
-        width: 350px;
-        height: 350px;
+        width:300px;
+        height: 300px;
         margin-left: -150px;
         margin-top: -180px;
     }
@@ -304,7 +303,7 @@ body {
 	
 	font-family:pacfont;
 	font-size: 50px;
-	color:#4abeab;
+	color:#223748;
 }
 
 .X{
@@ -314,7 +313,7 @@ body {
 	
 	font-family:pacfont;
 	font-size: 50px;
-	color:#ffac39;	
+	color:#223748;	
 }
 
 h1
@@ -326,3 +325,32 @@ h1
 	color:#ffac39;
 	
 }
+
+
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+    pointer-events:none;
+}
+.vertical-align-center {
+    /* To center vertically */
+    display: table-cell;
+    vertical-align: middle;
+    pointer-events:none;
+}
+.modal-content {
+    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+    width:80%;
+    height:inherit;
+	text-align:center;
+    /* To center horizontally */
+    margin: 0 auto;
+    pointer-events:all;
+}
+
+
+.modal-footer{
+	text-align:center;
+}
+
