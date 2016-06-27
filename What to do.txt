@@ -1,0 +1,7 @@
+open git
+open node cmd
+open prabhanshu\web and stuff\nodejs\tictactoe
+run app.js
+also open prabhanshu\TICTACTOE
+
+cd prabhanshu\web and stuff\nodejs\tictactoe
